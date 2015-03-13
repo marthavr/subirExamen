@@ -1,0 +1,170 @@
+<!DOCTYPE html-->
+<html>
+<head>
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<title>Aplicacion movil</title>
+<script type="text/javascript">
+$(document).ready(function inicio(){
+/*alert("Listo");*/
+var btnEnvio=$("#enviar");
+btnEnvio.click(function enviarDatos(){
+    var id=$("#id").val();
+    var numerocontrol=$("#numerocontrol").val();
+    var nom=$("#nombre").val();
+    var app=$("#apellidopaterno").val();
+    var apm=$("#apellidomaterno").val();
+    var semestre=$("#semestre").val();
+    var carrera=$("#carrera").val();
+    
+    /*alert("Listo");*/
+    $.ajax({
+        type:"POST",
+        url:"http://martha13valadez.260mb.net/envio.php",
+        data: "&id="+id+"&numerocontrol="+numerocontrol+"&nombre="+nom+"&apellidopaterno="+app+"&apellidomaterno="+apm+"&semestre="+semestre+"&carrera="+carrera,
+        success: recepcion
+        });
+});
+function recepcion(datos){
+    /*alert("Listo:"+datos);*/
+    var resp=$("#respuesta");
+    resp.html(datos);
+}
+var btnEnvio=$("#enviarr");
+btnEnvio.click(function enviarDatos3(){
+    var id=$("#id").val();
+    var numerocontrol=$("#numerocontrol").val();
+    var calificacion_parcial1=parseInt($("#calificacion_parcial1").val());
+    var calificacion_parcial2=parseInt($("#calificacion_parcial2").val());
+    var calificacion_parcial3=parseInt($("#calificacion_parcial3").val());
+    var calificacion_parcial4=parseInt($("#calificacion_parcial4").val());
+    var promedio=$("#promedio").val();
+  var result=(calificacion_parcial1+calificacion_parcial2+calificacion_parcial3+calificacion_parcial4)/4;
+var r=$("#res");
+r.val(result);
+    /*alert("Listo");*/
+    $.ajax({
+        type:"POST",
+        url:"http://martha13valadez.260mb.net/enviocalificaciones.php",
+        data: "&id="+id+"&numerocontrol="+numerocontrol+"&calificacion_parcial1="+calificacion_parcial1+"&calificacion_parcial2="+calificacion_parcial2+"&calificacion_parcial3="+calificacion_parcial3+"&calificacion_parcial4="+calificacion_parcial4+"&promedio="+promedio+result,
+        success: recepcion2
+        });
+});
+function recepcion2(datos){
+    /*alert("Listo:"+datos);*/
+    var resp=$("#respuesta2");
+    resp.html(datos);
+    }});
+
+
+  
+
+</script>
+</head>
+<body>
+    <div data-role="page" id="Principal" data-theme="c">
+<div data-role="header">
+<p> INFORMACIÒN DE ALUMNOS</p>
+
+</div>
+
+<div data-role="content">
+
+<a href="#Pagina2" data-role="button" data-transition="pop" >DATOS PERSONALES</a>
+<a href="#Pagina3" data-role="button" data-transition="fade">DATOS DE LA ESCUELA</a>
+</div>
+    </div>
+
+    <!--pag1-->
+    <div data-role="page" id="Pagina2">
+    <div data-role="header">
+
+        <p></p>
+     <a href="#Principal" data-role="button" data-transition="pop" data-add-back-btn="true" data-icon="home">Regresar</a>
+<p style="text-align:center">Envio de datos desde un formulario</p></div>
+
+<div data-role="content">
+<form method="POST" action="envio.php">
+<div class="ui-field-contain">
+    
+     <label for="id">Id:</label>
+<input type="text" name="id" id="id">
+
+<label for="numerocontrol">Numero de Control:</label>
+<input type="text" name="numerocontrol" id="numerocontrol">
+
+<label for="nombre">Nombre:</label>
+<input type="text" name="nombre" id="nombre">
+
+<label for="apellidop">Apellido Paterno: </label>
+<input type="text" name="apellidopaterno" id="apellidopaterno" />
+
+<label for="apellidom">Apellido Materno: </label>
+<input type="text" name="apellidomaterno" id="apellidomaterno" />
+
+<label for="semestre">Semestre: </label>
+<input type="text" name="semestre" id="semestre" />
+
+<label for="carrera">Carrera: </label>
+<input type="text" name="carrera" id="carrera" />
+</div>		
+<input type="button" name="enviar" id="enviar" value="enviar">
+</form>
+<div id="respuesta">
+    
+</div>
+</div>
+<div data-role="footer">
+<p style="text-align:center; font-size:10px;">Derechos Reservados</p>
+
+
+</div>
+    </div>
+
+<!--pag3-->
+
+<div data-role="page" id="Pagina3">
+    <div data-role="header">
+     <a href="#Principal" data-role="button" data-transition="flip" data-add-back-btn="true" data-icon="home">Regresar</a>
+             </div>
+           
+            
+<div data-role="content">
+<p style="text-align:center">Calificaciones del Alumno</p></div>
+
+<div data-role="content">
+
+   <form method="POST" action="enviocalificaciones.php">
+     <label for="id">Id:</label>
+<input type="text" name="id" id="id">
+
+<label for="numerocontrol">Numero de Control:</label>
+<input type="text" name="numerocontrol" id="numerocontrol">
+
+<label for="calificacion_parcial1">Calificacion Parcia1:</label>
+<input type="text" name="calificacion_parcial1" id="calificacion_parcial1">
+
+<label for="calificacionparcial2">Calificacion Parcial2: </label>
+<input type="text" name="calificacion_parcial2" id="calificacion_parcial2" />
+
+<label for="calificacion_parcial3">Calificacion Parcial3: </label>
+<input type="text" name="calificacion_parcial3" id="calificacion_parcial3" />
+
+<label for="calificacion_parcial4">Calificacion Parcia4: </label>
+<input type="text" name="calificacion_parcial4" id="calificacion_parcial4" />
+
+<label for="promedio">Promedio: </label>
+<input type="text" name="promedio" id="promedio" />
+
+
+<input type="button" name="enviarr" id="enviarr" value="Enviar">
+<div id="respuesta2">
+
+        
+    </form>
+</div>
+</div>
+</div>
+</body>
+</html>
